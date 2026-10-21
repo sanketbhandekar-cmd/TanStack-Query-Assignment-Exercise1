@@ -30,4 +30,20 @@ Build a React application that displays products from a REST API using TanStack 
 6. Verify cached data is displayed without an unnecessary loading state.
 7. Trigger a background refetch and verify existing data remains visible while `isFetching` is true.
 8. Disconnect the network or simulate an API failure and verify the error state.
-# TanStack-Query-Assignment-Exercise1
+
+## Changes Done as per Requirements
+
+- **Configured TanStack Query & DevTools:** Initialized `QueryClient`, wrapped the application with `QueryClientProvider`, and mounted `<ReactQueryDevtools initialIsOpen={false} />`.
+- **Created Product Listing Component:** Implemented `ProductList` component using `useQuery()` to fetch data from the DummyJSON REST API.
+- **Implemented Query Key Structure:**
+  - Base query key: `['products']` when no search term is entered.
+  - Filtered query key: `['products', { search: searchTerm }]` when searching.
+- **Implemented UI States:**
+  - `isPending`: Displays an initial `"Loading products..."` status while data has not yet loaded.
+  - `isFetching`: Displays an `"Updating products in background..."` banner and disables the refresh button (`Refreshing...`) while keeping existing products visible.
+  - `isError`: Displays the error message in a styled container (`.error`) when a request fails or is triggered via DevTools.
+  - `isSuccess`: Displays the count of successfully loaded products and renders product cards in a responsive grid.
+- **Configured Cache Timing:** Set `staleTime: 30 * 1000` (30 seconds) and `gcTime: 5 * 60 * 1000` (5 minutes).
+- **Manual Refetch:** Added a "Refresh Products" button calling `refetch()` to manually fetch fresh server data.
+- **Search & Filtering:** Added a search input using React `useState` for the input value only; data fetching and server caching are handled automatically by TanStack Query without manual `useEffect`.
+- **Navigation / Unmount Toggle:** Added a "Navigate Away / Return to Products" toggle button to easily demonstrate that returning to the component within the 30-second `staleTime` serves cached data immediately without an unnecessary loading state.
